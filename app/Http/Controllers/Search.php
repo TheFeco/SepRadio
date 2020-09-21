@@ -21,8 +21,8 @@ class Search extends Controller
 
         if (!$q) return response(['error' => 'query required'], 400);
 
-        $playlists = Playlist::where('name', 'like', "%$q%")->take(3)->get();
-        $tracks = Track::where('title', 'like', "%$q%")->take(3)->get();
+        $playlists = Playlist::where('name', 'like', "%$q%")->take(3)->get(['id', 'name']);
+        $tracks = Track::where('title', 'like', "%$q%")->take(3)->get(['id', 'title']);
 
         $data = compact('playlists', 'tracks');
 
