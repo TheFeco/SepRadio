@@ -18,4 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('search', 'Search');
 Route::apiResource('tracks', 'TracksController');
+Route::post('track/like', 'TracksController@storeLike');
+Route::post('track/view', 'TracksController@storeView');

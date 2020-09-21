@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use DB;
 use App\Models\Track;
+use App\Models\View;
 use Illuminate\Http\Request;
 
 class TracksController extends Controller
@@ -29,16 +31,42 @@ class TracksController extends Controller
             $perPage = 50;
             $subquery = sprintf($subquery, $perPage);
 
-            return $query->leftjoin(DB::raw("($subquery) as c"), 'c.track', '=', 'tracks.id')
+            $data = $query->leftjoin(DB::raw("($subquery) as c"), 'c.track', '=', 'tracks.id')
                 ->orderBy('c.count', 'desc')
                 ->take($perPage)
                 ->get();
+            return response(compact('data'));
         }
 
+        $data = $query->get();
+        return response(compact('data'));
+    }
 
-        return $query->get();
+    public function storeView(Request $request)
+    {
+        $tid = $request->input('id');
+
+        $track = Track::findOrFail($tid);
+        $track->increment('views');
+
+        View::create(['track' => $tid, 'by' => 0]);
+
+        return response(['message' => 'View added']);
+    }
+
+    public function storeLike(Request $request)
+    {
+        $tid = $request->input('id');
+
+        $track = Track::findOrFail($tid);
+        $track->increment('likes');
+
+        Like::create(['track' => $tid, 'by' => 0]);
+
+        return response(['message' => 'Like added']);
     }
 }
+
 
 // //POPULARES
 
