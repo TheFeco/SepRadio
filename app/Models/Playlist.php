@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Comment extends Model
+class Playlist extends Model
 {
 
   /**
@@ -12,9 +12,10 @@ class Comment extends Model
    */
   protected $fillable = [
     'id',
-    'uid',
-    'tid',
-    'message',
+    'by',
+    'name',
+    'description',
+    'public',
     'time',
   ];
 

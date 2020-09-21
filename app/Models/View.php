@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Comment extends Model
+class View extends Model
 {
 
   /**
@@ -12,9 +12,9 @@ class Comment extends Model
    */
   protected $fillable = [
     'id',
-    'uid',
-    'tid',
-    'message',
+    'by',
+    'track',
+    'cleared',
     'time',
   ];
 
